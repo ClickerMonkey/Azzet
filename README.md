@@ -18,7 +18,7 @@ Properties props = Assets.loadFrom("app.properties", "tcp"); // loads from TcpSo
 - <b>GIF</b> (java.awt.image.BufferedImage[])
 - <b>PNG/BMP/WBMP/JPEG/JPG</b> (java.awt.image.BufferedImage)
 - <b>MID/MIDI</b> (javax.sound.midi.Sequence)
-- <b>WAV/AU/AIFF</b> (javax.sound.sampled.Clip)
+- <b>WAV/AU/AIFF/SND</b> (javax.sound.sampled.Clip)
 - <b>TTF</b> (java.awt.Font)
 - <b>CSV</b> ([org.magnos.asset.csv.Table](Formats/org/magnos/asset/csv/Table.java))
 - <b>CLASS/CLAZZ</b> (java.lang.Class)
@@ -26,7 +26,7 @@ Properties props = Assets.loadFrom("app.properties", "tcp"); // loads from TcpSo
 - <b>ZIP</b> ([org.magnos.asset.zip.Zip](Formats/org/magnos/asset/zip/Zip.java))
 - <b>GZ</b> ([org.magnos.asset.AssetInfo](Source/org/magnos/asset/AssetInfo.java))
 - <b>DAT</b> (byte[], java.io.InputStream, java.nio.ByteBuffer, java.io.ByteArrayOutputStream)
-- <b>TXT</b> (java.lang.String, char[], java.nio.CharBuffer)
+- <b>TXT</b> (java.lang.String, char[], java.nio.CharBuffer, java.lang.StringBuffer, java.lang.StringBuilder)
 
 <b>Sources:</b>
 - Classpath
