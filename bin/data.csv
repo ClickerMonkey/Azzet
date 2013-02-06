@@ -1,0 +1,5 @@
+id,	name,	age,	admin
+1,	phil,	23,		true
+2,	jack,	45.6,	false
+3,	jesse,	2,		true
+4,	john,	10,		false

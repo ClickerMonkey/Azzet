@@ -1,0 +1,24 @@
+<html>
+	<head>
+		<title>Example Asset Applet</title>
+	</head>
+	<body>
+   		<script src="http://www.java.com/js/deployJava.js"></script>
+    	<script>
+    	
+    		// Applet attributes and parameters 
+        	var attributes = {
+        		code: 'TestApplet',
+        		width:275, 
+        		height:180
+        	}; 
+        	var parameters = {
+        		jnlp_href: 'test-jnlp.jnlp'
+        	}; 
+        	var version = '1.6';
+        	// Deploy the applet
+        	deployJava.runApplet(attributes, parameters, version);
+        	
+	    </script>
+	</body>
+</html>
