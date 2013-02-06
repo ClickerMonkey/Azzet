@@ -39,15 +39,15 @@ public class SmartSource extends BaseAssetSource
 	public static final boolean DEFAULT_LOAD_DEFAULTS = true;
 
 	public static final int PATTERN_GROUP = 1;
-	public static final Pattern PATTERN_WEB = Pattern.compile( "^(http:.*|https:.*|ftp:.*)$" );
-	public static final Pattern PATTERN_FILES = Pattern.compile( "^(\\./.*|/|[a-zA-Z]:[\\\\/].*)$" );
-	public static final Pattern PATTERN_DATABASE = Pattern.compile( "^db:(.*)$" );
-	public static final Pattern PATTERN_JAR = Pattern.compile( "^jar:(.*)$" );
-	public static final Pattern PATTERN_FTP = Pattern.compile( "^ftp:(.*)$" );
-	public static final Pattern PATTERN_MULTICAST = Pattern.compile( "^multicast:(.*)$" );
-	public static final Pattern PATTERN_SSL = Pattern.compile( "^ssl:(.*)$" );
-	public static final Pattern PATTERN_TCP = Pattern.compile( "^tcp:(.*)$" );
-	public static final Pattern PATTERN_UDP = Pattern.compile( "^udp:(.*)$" );
+	public static final Pattern PATTERN_WEB = Pattern.compile( "^(http://.*|https://.*|ftp://.*)$" );
+	public static final Pattern PATTERN_FILES = Pattern.compile( "^(\\./.*|/.*|[a-zA-Z]:[\\\\/].*|file:)$" );
+	public static final Pattern PATTERN_DATABASE = Pattern.compile( "^db://(.*)$" );
+	public static final Pattern PATTERN_JAR = Pattern.compile( "^jar://(.*)$" );
+	public static final Pattern PATTERN_FTP = Pattern.compile( "^ftp://(.*)$" );
+	public static final Pattern PATTERN_MULTICAST = Pattern.compile( "^multicast://(.*)$" );
+	public static final Pattern PATTERN_SSL = Pattern.compile( "^ssl://(.*)$" );
+	public static final Pattern PATTERN_TCP = Pattern.compile( "^tcp://(.*)$" );
+	public static final Pattern PATTERN_UDP = Pattern.compile( "^udp://(.*)$" );
 
 	private ArrayList<PatternedSource> sources = new ArrayList<PatternedSource>();
 	private AssetSource defaultSource;
