@@ -16,11 +16,13 @@
 
 package org.magnos.asset.source;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.awt.Font;
 
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.magnos.asset.Assets;
 import org.magnos.asset.font.FontFormat;
@@ -36,11 +38,17 @@ import org.magnos.asset.font.FontInfo;
 public class TestFtp 
 {
 
-	@Before
+	@BeforeClass
 	public void onBefore() 
 	{
 		Assets.addFormat( new FontFormat() );
 		Assets.setDefaultSource( new FtpSource("127.0.0.1/", "testuser", "testpassword") );
+	}
+	
+	@AfterClass
+	public static void onAfter()
+	{
+		Assets.reset();
 	}
 	
 	@Test

@@ -22,7 +22,8 @@ import static org.junit.Assert.assertNotNull;
 import java.net.InetSocketAddress;
 import java.util.Properties;
 
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.magnos.asset.Assets;
 import org.magnos.asset.props.PropertyFormat;
@@ -39,15 +40,21 @@ import org.magnos.asset.text.TextFormat;
 public class TestUdp 
 {
 
-	private final int SERVER_PORT = 1023;
-	private final int SERVER_PACKET = 1380;
-	
-	@Before
-	public void onBefore()
+	private static final int SERVER_PORT = 1023;
+	private static final int SERVER_PACKET = 1380;
+
+	@BeforeClass
+	public static void onBefore()
 	{
 		Assets.addFormat( new PropertyFormat() );
 		Assets.addFormat( new TextFormat() );
 		Assets.setDefaultSource( new UdpSource(new InetSocketAddress("127.0.0.1", SERVER_PORT)) );
+	}
+	
+	@AfterClass
+	public static void onAfter()
+	{
+		Assets.reset();
 	}
 	
 	@Test

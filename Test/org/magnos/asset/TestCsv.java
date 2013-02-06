@@ -16,12 +16,16 @@
 
 package org.magnos.asset;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.magnos.asset.csv.Cell;
 import org.magnos.asset.csv.CsvFormat;
@@ -38,11 +42,17 @@ import org.magnos.asset.source.ClasspathSource;
 public class TestCsv 
 {
 
-	@Before
-	public void onBefore()
+	@BeforeClass
+	public static void onBefore()
 	{
 		Assets.addFormat( new CsvFormat() );
 		Assets.setDefaultSource( new ClasspathSource() );
+	}
+	
+	@AfterClass
+	public static void onAfter()
+	{
+		Assets.reset();
 	}
 	
 	@Test

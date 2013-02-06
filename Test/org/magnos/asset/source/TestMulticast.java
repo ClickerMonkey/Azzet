@@ -24,7 +24,8 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Properties;
 
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.magnos.asset.Assets;
 import org.magnos.asset.props.PropertyFormat;
@@ -41,26 +42,41 @@ import org.magnos.asset.text.TextFormat;
 public class TestMulticast 
 {
 
-	private final String SERVER_ADDRESS = "228.5.6.7";
-	private final InetAddress SERVER_GROUP;
-	private final int SERVER_PORT = 1027;
-	private final int SERVER_PACKET = 1380;
+	private static final String SERVER_ADDRESS = "228.5.6.7";
+	private static final int SERVER_PORT = 1027;
+	private static final int SERVER_PACKET = 1380;
+	private static final InetAddress SERVER_GROUP;
 	
-	/**
-	 * 
-	 * @throws UnknownHostException
-	 */
-	public TestMulticast() throws UnknownHostException
+	static
+	
 	{
-		SERVER_GROUP = InetAddress.getByName( SERVER_ADDRESS );
+		InetAddress serverGroupAddress = null;
+		
+		try
+		{
+			serverGroupAddress = InetAddress.getByName( SERVER_ADDRESS );
+		}
+		catch (UnknownHostException e)
+		{
+			e.printStackTrace();
+		}
+		
+		SERVER_GROUP = serverGroupAddress;
 	}
 	
-	@Before
-	public void onBefore()
+
+	@BeforeClass
+	public static void onBefore()
 	{
 		Assets.addFormat( new PropertyFormat() );
 		Assets.addFormat( new TextFormat() );
 		Assets.setDefaultSource( new MulticastSource(SERVER_GROUP, SERVER_PORT) );
+	}
+	
+	@AfterClass
+	public static void onAfter()
+	{
+		Assets.reset();
 	}
 	
 	@Test

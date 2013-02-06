@@ -16,18 +16,18 @@
 
 package org.magnos.asset.source;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.Properties;
 
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.magnos.asset.Assets;
 import org.magnos.asset.props.PropertyFormat;
 import org.magnos.asset.server.AssetServer;
 import org.magnos.asset.server.tcp.TcpServer;
-import org.magnos.asset.source.ClasspathSource;
-import org.magnos.asset.source.TcpSource;
 import org.magnos.asset.text.TextFormat;
 
 /**
@@ -43,12 +43,18 @@ public class TestTcp
 	private static final int SERVER_BACKLOG = 32;
 	private static final String SERVER_HOST = "127.0.0.1";
 
-	@Before
-	public void onBefore()
+	@BeforeClass
+	public static void onBefore()
 	{
 		Assets.addFormat( new PropertyFormat() );
 		Assets.addFormat( new TextFormat() );
 		Assets.setDefaultSource( new TcpSource(SERVER_HOST, SERVER_PORT) );
+	}
+	
+	@AfterClass
+	public static void onAfter()
+	{
+		Assets.reset();
 	}
 
 	@Test

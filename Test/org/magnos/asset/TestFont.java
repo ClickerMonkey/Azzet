@@ -21,7 +21,8 @@ import static org.junit.Assert.assertNotNull;
 
 import java.awt.Font;
 
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.magnos.asset.font.FontFormat;
 import org.magnos.asset.font.FontInfo;
@@ -36,11 +37,17 @@ import org.magnos.asset.source.ClasspathSource;
 public class TestFont 
 {	
 
-	@Before
-	public void onBefore() 
+	@BeforeClass
+	public static void onBefore() 
 	{
 		Assets.addFormat( new FontFormat() );
 		Assets.setDefaultSource( new ClasspathSource() );
+	}
+	
+	@AfterClass
+	public static void onAfter()
+	{
+		Assets.reset();
 	}
 	
 	@Test

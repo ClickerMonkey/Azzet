@@ -16,11 +16,13 @@
 
 package org.magnos.asset.source;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.awt.image.BufferedImage;
 
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.magnos.asset.Assets;
 import org.magnos.asset.image.GifFormat;
@@ -35,11 +37,17 @@ import org.magnos.asset.image.GifFormat;
 public class TestJarSource 
 {
 
-	@Before
-	public void onBefore() 
+	@BeforeClass
+	public static void onBefore() 
 	{
 		Assets.addFormat( new GifFormat() );
 		Assets.setDefaultSource( JarSource.fromFile("./Test/testing.jar") );
+	}
+	
+	@AfterClass
+	public static void onAfter()
+	{
+		Assets.reset();
 	}
 	
 	@Test

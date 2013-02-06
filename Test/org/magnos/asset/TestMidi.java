@@ -16,7 +16,8 @@
 
 package org.magnos.asset;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiSystem;
@@ -24,7 +25,8 @@ import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Sequence;
 import javax.sound.midi.Sequencer;
 
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.magnos.asset.audio.MidiFormat;
 import org.magnos.asset.source.ClasspathSource;
@@ -38,11 +40,17 @@ import org.magnos.asset.source.ClasspathSource;
 public class TestMidi 
 {
 
-	@Before
-	public void onBefore()
+	@BeforeClass
+	public static void onBefore()
 	{
 		Assets.addFormat( new MidiFormat() );
 		Assets.setDefaultSource( new ClasspathSource() );
+	}
+	
+	@AfterClass
+	public static void onAfter()
+	{
+		Assets.reset();
 	}
 	
 	@Test

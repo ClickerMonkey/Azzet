@@ -1,13 +1,10 @@
 package org.magnos.asset.source;
 
-import static org.junit.Assert.*;
-
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.magnos.asset.Assets;
-import org.magnos.asset.text.TextFormat;
+import static org.junit.Assert.assertSame;
 
 import java.sql.Connection;
+
+import org.junit.Test;
 
 /**
  * Tests the {@link SmartSource} class.
@@ -18,12 +15,6 @@ import java.sql.Connection;
 public class TestSmart
 {
 	
-	@BeforeClass
-	public static void before()
-	{
-		Assets.addFormat( new TextFormat() );
-	}
-
 	@Test
 	public void testSmart()
 	{

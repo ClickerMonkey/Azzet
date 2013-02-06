@@ -16,12 +16,14 @@
 
 package org.magnos.asset;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.awt.Font;
 import java.awt.image.BufferedImage;
 
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.magnos.asset.font.FontFormat;
 import org.magnos.asset.image.GifFormat;
@@ -39,14 +41,20 @@ import org.magnos.asset.zip.ZipFormat;
 public class TestZip 
 {
 
-	@Before
-	public void onBefore()
+	@BeforeClass
+	public static void onBefore()
 	{
 		Assets.addFormat( new FontFormat() );
 		Assets.addFormat( new ImageFormat() );
 		Assets.addFormat( new GifFormat() );
 		Assets.addFormat( new ZipFormat() );
 		Assets.setDefaultSource( new ClasspathSource() );
+	}
+	
+	@AfterClass
+	public static void onAfter()
+	{
+		Assets.reset();
 	}
 	
 	@Test

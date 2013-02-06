@@ -23,6 +23,7 @@ import org.magnos.asset.source.TestClasspath;
 import org.magnos.asset.source.TestFile;
 import org.magnos.asset.source.TestJarSource;
 import org.magnos.asset.source.TestMulticast;
+import org.magnos.asset.source.TestSmart;
 import org.magnos.asset.source.TestTcp;
 import org.magnos.asset.source.TestUdp;
 import org.magnos.asset.source.TestWeb;
@@ -44,6 +45,7 @@ import org.magnos.asset.source.TestWeb;
 	TestTcp.class,
 	TestUdp.class,
 	TestWeb.class,
+	TestSmart.class,
 
 	/** CORE **/
 	TestAssets.class,

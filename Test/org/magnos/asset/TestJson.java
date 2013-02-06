@@ -7,8 +7,9 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
-import java.io.InputStream;
 
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.magnos.asset.json.Json;
 import org.magnos.asset.json.JsonArray;
@@ -18,6 +19,7 @@ import org.magnos.asset.json.JsonString;
 import org.magnos.asset.json.JsonType;
 import org.magnos.asset.json.JsonValue;
 import org.magnos.asset.source.ClasspathSource;
+import org.magnos.asset.text.TextFormat;
 
 /**
  * Tests the {@link JsonFormat} class.
@@ -27,6 +29,30 @@ import org.magnos.asset.source.ClasspathSource;
  */
 public class TestJson
 {
+	
+	@BeforeClass
+	public static void onBefore()
+	{
+		Assets.addFormat( new JsonFormat() );
+		Assets.addFormat( new TextFormat() );
+		Assets.setDefaultSource( new ClasspathSource() );
+	}
+	
+	@AfterClass
+	public static void onAfter()
+	{
+		Assets.reset();
+	}
+	
+	@Test
+	public void testParsing()
+	{
+		JsonObject json = Assets.load( "big.json" );
+		
+		assertNotNull( json );
+		assertTrue( json.has( "realm" ) );
+		assertTrue( json.has( "alliance" ) );
+	}
 
 	@Test
 	public void testBoolean() throws IOException
@@ -123,7 +149,7 @@ public class TestJson
 	@Test
 	public void testSpeed() throws Exception
 	{
-		String text = getLargeJson();
+		String text = Assets.load( "big.json", "txt" );
 		
 		System.out.println( text.length() );
 		
@@ -140,14 +166,4 @@ public class TestJson
 		System.out.format( "Elapsed: %.6f\n", (end - start) * 0.000000001 );
 	}
 	
-	private String getLargeJson() throws Exception
-	{
-		// > 8mb file
-		AssetSource source = new ClasspathSource();
-		InputStream stream = source.getStream( "big.json" );
-		byte[] data = new byte[ stream.available() ];
-		int read = stream.read( data );
-		return new String( data, 0, read );
-	}
-
 }

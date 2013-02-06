@@ -16,7 +16,8 @@
 
 package org.magnos.asset;
 
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.magnos.asset.java.ClassFormat;
@@ -34,11 +35,17 @@ import org.magnos.asset.source.ClasspathSource;
 public class TestVersionedClass 
 {
 
-	@Before
-	public void onBefore()
+	@BeforeClass
+	public static void onBefore()
 	{
 		Assets.addFormat( new JarFormat() );
 		Assets.setDefaultSource( new ClasspathSource() );
+	}
+	
+	@AfterClass
+	public static void onAfter()
+	{
+		Assets.reset();
 	}
 	
 	@Test

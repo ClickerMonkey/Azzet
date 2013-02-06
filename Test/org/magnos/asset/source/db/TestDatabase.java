@@ -150,6 +150,8 @@ public class TestDatabase
 		Connection con = getConnection();
 		
 		con.rollback();
+		
+		Assets.reset();
 	}
 	
 	/**

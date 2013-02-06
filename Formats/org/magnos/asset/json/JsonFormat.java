@@ -16,6 +16,7 @@
 
 package org.magnos.asset.json;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -67,7 +68,7 @@ public class JsonFormat extends BaseAssetFormat
 
 	public JsonValue readValueFromStream( InputStream in, String charsetName ) throws IOException
 	{
-		return readValueFromStream( new InputStreamReader( in, charsetName ) );
+		return readValueFromStream( new BufferedReader( new InputStreamReader( in, charsetName ) ) );
 	}
 
 	public JsonValue readValueFromStream( Reader reader ) throws IOException

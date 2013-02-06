@@ -833,5 +833,18 @@ public class Assets
 	{
 		return cacheMisses;
 	}
+	
+	/**
+	 * Removes all formats, sources, and their defaults.
+	 */
+	public static void reset()
+	{
+		formatsByExtension.clear();
+		formatsByType.clear();
+		sources.clear();
+		
+		defaultSource = null;
+		defaultFormat = null;
+	}
 
 }

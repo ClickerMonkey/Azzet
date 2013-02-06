@@ -21,7 +21,8 @@ import static org.junit.Assert.assertNotNull;
 
 import java.awt.image.BufferedImage;
 
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.magnos.asset.image.ImageFormat;
 import org.magnos.asset.source.ClasspathSource;
@@ -35,11 +36,17 @@ import org.magnos.asset.source.ClasspathSource;
 public class TestImage 
 {
 
-	@Before
-	public void onBefore() 
+	@BeforeClass
+	public static void onBefore() 
 	{
 		Assets.addFormat( new ImageFormat() );
 		Assets.setDefaultSource( new ClasspathSource() );
+	}
+	
+	@AfterClass
+	public static void onAfter()
+	{
+		Assets.reset();
 	}
 	
 	@Test
