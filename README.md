@@ -40,6 +40,8 @@ Properties props = Assets.loadFrom("app.properties", "tcp"); // loads from TcpSo
 - SSL
 - UDP Multicast 
 
+[http://clickermonkey.github.com/azzet/](Documentation)
+
 The Formats and Sources are registered with the Assets class. The Assets class determines the format and source to use for a given request based on extension, requested asset type, the default source, and any registered sources and completes the request. 
 
 The Asset class also caches assets to avoid re-retrieving and parsing an asset.
