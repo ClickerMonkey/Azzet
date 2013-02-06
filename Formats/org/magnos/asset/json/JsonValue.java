@@ -23,7 +23,12 @@ import java.io.IOException;
  * A generic value in JSON.
  * 
  * @author Philip Diffenderfer
- * 
+ * @see JsonNull
+ * @see JsonArray
+ * @see JsonObject
+ * @see JsonNumber
+ * @see JsonString
+ * @see JsonBoolean
  */
 public interface JsonValue
 {
