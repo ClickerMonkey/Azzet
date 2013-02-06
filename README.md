@@ -12,21 +12,21 @@ Properties props = Assets.loadFrom("app.properties", "tcp"); // loads from TcpSo
 ```
 
 <b>Formats (and equivalent java objects):</b>
-- JSON => org.magnos.asset.json.JsonValue
-- XML => org.w3c.dom.Document
-- PROPERTIES/XML/CONFIG => java.util.Properties, org.magnos.asset.props.Config
-- GIF => java.awt.image.BufferedImage[]
-- PNG/BMP/WBMP/JPEG/JPG => java.awt.image.BufferedImage
-- MID/MIDI => javax.sound.midi.Sequence
-- WAV/AU/AIFF => javax.sound.sampled.Clip
-- TTF => java.awt.Font
-- CSV => org.magnos.asset.csv.Table
-- CLASS/CLAZZ => java.lang.Class
-- JAR => org.magnos.asset.java.Jar
-- ZIP => org.magnos.asset.zip.Zip
-- GZ => org.magnos.asset.AssetInfo
-- DAT => byte[], java.io.InputStream, java.nio.ByteBuffer, java.io.ByteArrayOutputStream
-- TXT => java.lang.String, char[], java.nio.CharBuffer
+- <b>JSON</b> (org.magnos.asset.json.JsonValue)
+- <b>XML</b> (org.w3c.dom.Document)
+- <b>PROPERTIES/XML/CONFIG</b> (java.util.Properties, org.magnos.asset.props.Config)
+- <b>GIF</b> (java.awt.image.BufferedImage[])
+- <b>PNG/BMP/WBMP/JPEG/JPG</b> (java.awt.image.BufferedImage)
+- <b>MID/MIDI</b> (javax.sound.midi.Sequence)
+- <b>WAV/AU/AIFF</b> (javax.sound.sampled.Clip)
+- <b>TTF</b> (java.awt.Font)
+- <b>CSV</b> (org.magnos.asset.csv.Table)
+- <b>CLASS/CLAZZ</b> (java.lang.Class)
+- <b>JAR</b> (org.magnos.asset.java.Jar)
+- <b>ZIP</b> (org.magnos.asset.zip.Zip)
+- <b>GZ</b> (org.magnos.asset.AssetInfo)
+- <b>DAT</b> (byte[], java.io.InputStream, java.nio.ByteBuffer, java.io.ByteArrayOutputStream)
+- <b>TXT</b> (java.lang.String, char[], java.nio.CharBuffer)
 
 <b>Sources:</b>
 - Classpath
