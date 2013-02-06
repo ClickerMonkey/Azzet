@@ -29,6 +29,20 @@ import org.magnos.asset.info.CharacterInfo;
 /**
  * A format for loading {@link String} from TXT files.
  * 
+ * <h2>Extensions</h2>
+ * <ul>
+ * <li>TXT - A Generic Text File</li>
+ * </ul>
+ * 
+ * <h2>Request Types<h2>
+ * <ul>
+ * <li>{@link java.lang.String}</li>
+ * <li>char[]</li>
+ * <li>{@link java.nio.CharBuffer}</li>
+ * <li>{@link java.lang.StringBuilder}</li>
+ * <li>{@link java.lang.StringBuffer}</li>
+ * </ul>
+ * 
  * @author Philip Diffenderfer
  * 
  */
@@ -40,7 +54,7 @@ public class TextFormat extends BaseAssetFormat
 	 */
 	public TextFormat()
 	{
-		super( new String[] { "txt" }, String.class, char[].class, CharBuffer.class );
+		super( new String[] { "txt" }, String.class, char[].class, CharBuffer.class, StringBuilder.class, StringBuffer.class );
 	}
 
 	@Override
@@ -53,24 +67,31 @@ public class TextFormat extends BaseAssetFormat
 	public Object loadAsset( InputStream input, AssetInfo assetInfo ) throws Exception
 	{
 		CharacterInfo info = (CharacterInfo)assetInfo;
+		
 		ByteArrayOutputStream output = FormatUtility.getOutput( input );
-
+		String outputString = output.toString( info.getCharsetName() );
+		
 		Object asset = null;
 
 		if (info.isType( String.class ))
 		{
-			// return String
-			asset = output.toString( info.getCharsetName() );
+			asset = outputString;
 		}
 		else if (info.isType( char[].class ))
 		{
-			// return char[]
-			asset = output.toString( info.getCharsetName() ).toCharArray();
+			asset = outputString.toCharArray();
 		}
 		else if (info.isType( CharBuffer.class ))
 		{
-			// return CharBuffer
-			asset = CharBuffer.wrap( output.toString( info.getCharsetName() ) );
+			asset = CharBuffer.wrap( outputString );
+		}
+		else if (info.isType( StringBuilder.class ))
+		{
+			asset = new StringBuilder( outputString );
+		}
+		else if (info.isType( StringBuffer.class ))
+		{
+			asset = new StringBuffer( outputString );
 		}
 
 		return asset;

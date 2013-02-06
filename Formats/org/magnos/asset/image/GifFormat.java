@@ -30,6 +30,16 @@ import org.magnos.asset.base.BaseAssetFormat;
 /**
  * A format for loading {@link BufferedImage}[] from GIF files.
  * 
+ * <h2>Extensions</h2>
+ * <ul>
+ * <li>GIF - Graphics Interchange Format</li>
+ * </ul>
+ * 
+ * <h2>Request Types<h2>
+ * <ul>
+ * <li>{@link java.awt.image.BufferedImage}[]</li>
+ * </ul>
+ * 
  * @author Philip Diffenderfer
  * 
  */

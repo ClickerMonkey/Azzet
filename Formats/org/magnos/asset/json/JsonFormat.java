@@ -33,6 +33,16 @@ import org.magnos.asset.io.CharacterReader;
 /**
  * A format for loading {@link JsonValue} from JS or JSON files.
  * 
+ * <h2>Extensions</h2>
+ * <ul>
+ * <li>JSON/JS - JSON File</li>
+ * </ul>
+ * 
+ * <h2>Request Types<h2>
+ * <ul>
+ * <li>{@link org.magnos.asset.json.JsonValue}</li>
+ * </ul>
+ * 
  * @author Philip Diffenderfer
  * 
  */
@@ -44,7 +54,7 @@ public class JsonFormat extends BaseAssetFormat
 	 */
 	public JsonFormat()
 	{
-		super( new String[] { "json", "js" }, JsonObject.class );
+		super( new String[] { "json", "js" }, JsonValue.class );
 	}
 
 	@Override

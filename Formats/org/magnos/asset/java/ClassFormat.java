@@ -26,6 +26,16 @@ import org.magnos.asset.base.BaseAssetFormat;
 /**
  * A format for loading {@link Class}s from CLASS and CLAZZ files.
  * 
+ * <h2>Extensions</h2>
+ * <ul>
+ * <li>CLASS/CLAZZ - Java Class File</li>
+ * </ul>
+ * 
+ * <h2>Request Types<h2>
+ * <ul>
+ * <li>{@link java.lang.Class}</li>
+ * </ul>
+ * 
  * @author Philip Diffenderfer
  * 
  */

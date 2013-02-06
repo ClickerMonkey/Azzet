@@ -28,6 +28,16 @@ import org.magnos.asset.base.BaseAssetFormat;
 /**
  * A format for loading {@link Sequence}s from MIDI (MID) files.
  * 
+ * <h2>Extensions</h2>
+ * <ul>
+ * <li>MID/MIDI - Musical Instrument Digital Interface</li>
+ * </ul>
+ * 
+ * <h2>Request Types<h2>
+ * <ul>
+ * <li>{@link javax.sound.midi.Sequence}</li>
+ * </ul>
+ * 
  * @author Philip Diffenderfer
  * 
  */

@@ -26,6 +26,16 @@ import org.magnos.asset.base.BaseAssetFormat;
 /**
  * A format for loading {@link Font}s from TTF files.
  * 
+ * <h2>Extensions</h2>
+ * <ul>
+ * <li>TTF - TrueType Font</li>
+ * </ul>
+ * 
+ * <h2>Request Types<h2>
+ * <ul>
+ * <li>{@link java.awt.Font}</li>
+ * </ul>
+ * 
  * @author Philip Diffenderfer
  * 
  */

@@ -31,6 +31,16 @@ import org.magnos.asset.base.BaseAssetFormat;
 /**
  * A format for loading {@link Zip}s from ZIP files.
  * 
+ * <h2>Extensions</h2>
+ * <ul>
+ * <li>ZIP - ZIP File Format</li>
+ * </ul>
+ * 
+ * <h2>Request Types<h2>
+ * <ul>
+ * <li>{@link org.magnos.asset.zip.Zip}</li>
+ * </ul>
+ * 
  * @author Philip Diffenderfer
  * 
  */

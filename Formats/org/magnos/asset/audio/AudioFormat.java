@@ -29,6 +29,19 @@ import org.magnos.asset.base.BaseAssetFormat;
 /**
  * A format for loading {@link Clip}s from WAV, AU, and AIFF files.
  * 
+ * <h2>Extensions</h2>
+ * <ul>
+ * <li>WAV - Waveform Audio File Format</li>
+ * <li>AU - Sun Audio File Format</li>
+ * <li>SND - Digital Sound File</li>
+ * <li>AIFF - Audio Interchange File Format</li>
+ * </ul>
+ * 
+ * <h2>Request Types<h2>
+ * <ul>
+ * <li>{@link javax.sound.sampled.Clip}</li>
+ * </ul>
+ * 
  * @author Philip Diffenderfer
  * 
  */
@@ -40,7 +53,7 @@ public class AudioFormat extends BaseAssetFormat
 	 */
 	public AudioFormat()
 	{
-		super( new String[] { "wav", "au", "aiff" }, Clip.class );
+		super( new String[] { "wav", "au", "snd", "aiff" }, Clip.class );
 	}
 
 	@Override

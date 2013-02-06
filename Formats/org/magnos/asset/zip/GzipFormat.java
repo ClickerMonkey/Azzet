@@ -28,6 +28,16 @@ import org.magnos.asset.base.BaseAssetFormat;
 /**
  * A format for loading {@link AssetInfo} from GZ files.
  * 
+ * <h2>Extensions</h2>
+ * <ul>
+ * <li>GZ - GNU Zip File Format</li>
+ * </ul>
+ * 
+ * <h2>Request Types<h2>
+ * <ul>
+ * <li>{@link org.magnos.asset.AssetInfo}</li>
+ * </ul>
+ * 
  * @author Philip Diffenderfer
  * 
  */

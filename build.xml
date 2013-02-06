@@ -18,16 +18,24 @@
 
 		<javac srcdir="${core.src}" destdir="${core.in}"
 			target="${java.target}" source="${java.source}" 
-			debug="on" optimize="on" />
+			debug="on" optimize="on" includeantruntime="false">
+			<compilerarg value="-Xlint" />
+		</javac>
 		<javac srcdir="${core.src}" destdir="${base.in}"
 			target="${java.target}" source="${java.source}" 
-			debug="on" optimize="on" />
+			debug="on" optimize="on" includeantruntime="false">
+			<compilerarg value="-Xlint" />
+		</javac>
 		<javac srcdir="${base.src}" destdir="${base.in}"
 			target="${java.target}" source="${java.source}" 
-			debug="on" optimize="on" />
+			debug="on" optimize="on" includeantruntime="false">
+			<compilerarg value="-Xlint" />
+		</javac>
 		<javac srcdir="${serv.src}" destdir="${base.in}"
 			target="${java.target}" source="${java.source}" 
-			debug="on" optimize="on" />
+			debug="on" optimize="on" includeantruntime="false">
+			<compilerarg value="-Xlint" />
+		</javac>
 
 	</target>
 

@@ -29,6 +29,19 @@ import org.magnos.asset.base.BaseAssetFormat;
  * A format for loading {@link BufferedImage}s from PNG, BMP, WBMP, JPEG, and
  * JPG files.
  * 
+ * <h2>Extensions</h2>
+ * <ul>
+ * <li>PNG - Portable Network Graphics</li>
+ * <li>BMP - Bitmap Image File</li>
+ * <li>WBMP - Wireless Application Protocol Bitmap Format</li>
+ * <li>JPEG/JPG - Joint Photographic Experts Group</li>
+ * </ul>
+ * 
+ * <h2>Request Types<h2>
+ * <ul>
+ * <li>{@link java.awt.image.BufferedImage}</li>
+ * </ul>
+ * 
  * @author Philip Diffenderfer
  * 
  */

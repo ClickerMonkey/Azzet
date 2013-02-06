@@ -29,6 +29,16 @@ import org.w3c.dom.Document;
 /**
  * A format for loading {@link Document}s from XML files.
  * 
+ * <h2>Extensions</h2>
+ * <ul>
+ * <li>XML - eXtensible Markup Language</li>
+ * </ul>
+ * 
+ * <h2>Request Types<h2>
+ * <ul>
+ * <li>{@link org.w3c.dom.Document}</li>
+ * </ul>
+ * 
  * @author Philip Diffenderfer
  * 
  */

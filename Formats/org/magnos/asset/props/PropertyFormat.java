@@ -28,6 +28,19 @@ import org.magnos.asset.base.BaseAssetFormat;
  * application also loads other XML files this should be added before the
  * XmlFormat to ensure that any XML files are not loaded by this format.
  * 
+ * <h2>Extensions</h2>
+ * <ul>
+ * <li>PROPERTIES - Java Properties File</li>
+ * <li>XML - Java XML Properties File</li>
+ * <li>CONFIG - Java Properties File</li>
+ * </ul>
+ * 
+ * <h2>Request Types<h2>
+ * <ul>
+ * <li>{@link java.util.Properties}</li>
+ * <li>{@link org.magnos.asset.props.Config}</li>
+ * </ul>
+ * 
  * @author Philip Diffenderfer
  * 
  */

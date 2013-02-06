@@ -26,6 +26,16 @@ import org.magnos.asset.base.BaseAssetFormat;
 /**
  * A format for loading a {@link Table} from a CSV file.
  * 
+ * <h2>Extensions</h2>
+ * <ul>
+ * <li>CSV - Comma Separated Values</li>
+ * </ul>
+ * 
+ * <h2>Request Types<h2>
+ * <ul>
+ * <li>{@link org.magnos.asset.csv.Table}</li>
+ * </ul>
+ * 
  * TODO account for escaped characters and quoted values
  * 
  * @author Philip Diffenderfer

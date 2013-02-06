@@ -29,6 +29,16 @@ import org.magnos.asset.zip.ZipFormat.UnclosableStream;
 
 /**
  * A format for loading {@link Jar}s from JAR files.
+ *
+ * <h2>Extensions</h2>
+ * <ul>
+ * <li>JAR - Java Archive</li>
+ * </ul>
+ * 
+ * <h2>Request Types<h2>
+ * <ul>
+ * <li>{@link org.magnos.asset.java.Jar}</li>
+ * </ul>
  * 
  * @author Philip Diffenderfer
  * 

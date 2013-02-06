@@ -21,6 +21,11 @@ public class ByteBufferInfo extends BaseAssetInfo
 	 */
 	public static final boolean DEFAULT_DIRECT = false;
 
+	/**
+	 * The default value for the request type of the AssetInfo.
+	 */
+	public static final Class<?> DEFAULT_REQUEST_TYPE = ByteBuffer.class;
+	
 	// properties
 	public static final String[] PROPERTIES = {
 		"direct"
@@ -34,7 +39,7 @@ public class ByteBufferInfo extends BaseAssetInfo
 	 */
 	public ByteBufferInfo()
 	{
-		this( DEFAULT_DIRECT );
+		this( DEFAULT_REQUEST_TYPE, DEFAULT_DIRECT );
 	}
 
 	/**
@@ -46,7 +51,32 @@ public class ByteBufferInfo extends BaseAssetInfo
 	 */
 	public ByteBufferInfo( boolean direct )
 	{
-		super( ByteBuffer.class );
+		this( DEFAULT_REQUEST_TYPE, direct );
+	}
+
+	/**
+	 * Instantiates a new ByteBufferInfo.
+	 * 
+	 * @param requestType
+	 * 		  The request type of the info.
+	 */
+	public ByteBufferInfo( Class<?> requestType )
+	{
+		this( requestType, DEFAULT_DIRECT );
+	}
+
+	/**
+	 * Instantiates a new ByteBufferInfo.
+	 * 
+	 * @param requestType
+	 * 		  The request type of the info.
+	 * @param direct
+	 *        True if the ByteBuffer is allocated directly in memory outside of
+	 *        the JVM, or false if the ByteBuffer is allocated to the Heap.
+	 */
+	public ByteBufferInfo( Class<?> requestType, boolean direct )
+	{
+		super( requestType );
 
 		this.direct = direct;
 	}
