@@ -26,9 +26,4 @@ TODO (classes)
 		b. Re-send Interval
 				Start a thread if this is specified which continually writes the request until a response is received.
 		c. Fragment
-				Add packet format to allow for large assets by fragmenting them.
-	4. Assets
-		a. Documentation
-		b. Proper caching
-		c. Source detection
-		
+				Add packet format to allow for large assets by fragmenting them.		
