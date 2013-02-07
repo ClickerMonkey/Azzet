@@ -7,7 +7,8 @@ Azzet is a simple Java library for loading assets from various sources
 BufferedImage img = Assets.load("http://www.google.com/logos/classicplus.png"); // loaded from website
 Font fnt = Assets.load("myfont.ttf", new FontInfo(32.0f)); // loaded from classpath
 Clip snd = Assets.load("C:\UserData\MyMusic.wav"); // loaded from file-system
-BufferedImage[] gif = Assets.loadFrom("mygif", "db"); // loads from DatabaseSource saved as "db"
+BufferedImage gif = Assets.loadFrom("mygif.gif", BufferedImage.class); // you can request the return type
+BufferedImage[] animatedGif = Assets.loadFrom("mygif.gif", "db"); // loads from DatabaseSource saved as "db"
 Properties props = Assets.loadFrom("app.properties", "tcp"); // loads from TcpSource saved as "tcp"
 ```
 
