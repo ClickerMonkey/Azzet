@@ -18,7 +18,11 @@ package org.magnos.asset;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 
+import org.magnos.asset.base.BaseFutureAsset;
 import org.magnos.asset.ex.UnknownAssetFormatException;
 import org.magnos.asset.ex.UnknownAssetSourceException;
 
@@ -67,6 +71,12 @@ public class Assets
 	 */
 	private static Map<Class<?>, AssetFormat> formatsByType =
 		new ConcurrentHashMap<Class<?>, AssetFormat>();
+	
+	/**
+	 * FutureAssetFactorys mapped by the output types they produce.
+	 */
+	private static Map<Class<?>, FutureAssetFactory<?>> futuresByType = 
+		new ConcurrentHashMap<Class<?>, FutureAssetFactory<?>>();
 
 	/**
 	 * The default AssetSource. If this is non-null and a request is valid for
@@ -80,7 +90,18 @@ public class Assets
 	 * extension our expected output type this format will be used.
 	 */
 	private static AssetFormat defaultFormat;
+	
+	/**
+	 * The default FutureAssetFactory. If a FutureAssetFactory cannot be 
+	 * determined based on request type
+	 */
+	private static FutureAssetFactory<?> defaultFutureAssetFactory = BaseFutureAsset.Factory();
 
+	/**
+	 * The ExecutorService to use for FutureAssets.
+	 */
+	private static ExecutorService futureAssetService = Executors.newSingleThreadExecutor();
+	
 	/**
 	 * Whether AssetInfos are cached.
 	 */
@@ -89,12 +110,12 @@ public class Assets
 	/**
 	 * The number of cache hits.
 	 */
-	private static int cacheHits = 0;
+	private static final AtomicInteger cacheHits = new AtomicInteger();
 
 	/**
 	 * The number of cache misses.
 	 */
-	private static int cacheMisses = 0;
+	private static final AtomicInteger cacheMisses = new AtomicInteger();
 
 	/**
 	 * Loads an asset based solely on the request. This is equivalent to:
@@ -383,7 +404,295 @@ public class Assets
 	{
 		return get( info( request, requestExtension, null, sourceName, requestInfo ) );
 	}
+	
+	/**
+	 * Returns a FutureAsset based solely on the request. This is equivalent to:
+	 * 
+	 * <pre>
+	 * future( info( request, null, null, null, null ) )
+	 * </pre>
+	 * 
+	 * @param <A>
+	 *        The type to automatically cast to.
+	 * @param request
+	 *        The request used to determine formats, sources, and subsequently
+	 *        the full path of the asset.
+	 * @return The requested asset.
+	 * @see #info(String, String, Class, String, AssetInfo)
+	 * @see #future(AssetInfo)
+	 */
+	public static <A> FutureAsset<A> loadFuture( String request )
+	{
+		return future( info( request, null, null, null, null ) );
+	}
 
+	/**
+	 * Returns a FutureAsset based on the request and an expected return type. This is
+	 * equivalent to:
+	 * 
+	 * <pre>
+	 * future( info( request, null, requestType, null, null ) )
+	 * </pre>
+	 * 
+	 * @param <A>
+	 *        The type to automatically cast to.
+	 * @param request
+	 *        The request used to determine formats, sources, and subsequently
+	 *        the full path of the asset.
+	 * @param requestType
+	 *        If given, the format of the asset will be determined using the
+	 *        format that was registered that had this type as one of it's
+	 *        possible outputs. If the lookup returns nothing the normal format
+	 *        determination will be used.
+	 * @return The requested asset.
+	 * @see #info(String, String, Class, String, AssetInfo)
+	 * @see #future(AssetInfo)
+	 */
+	public static <A> FutureAsset<A> loadFuture( String request, Class<A> requestType )
+	{
+		return future( info( request, null, requestType, null, null ) );
+	}
+
+	/**
+	 * Returns a FutureAsset based on the request and extension. This is equivalent to:
+	 * 
+	 * <pre>
+	 * future( info( request, formatExtension, null, null, null ) )
+	 * </pre>
+	 * 
+	 * @param <A>
+	 *        The type to automatically cast to.
+	 * @param request
+	 *        The request used to determine formats, sources, and subsequently
+	 *        the full path of the asset.
+	 * @param requestExtension
+	 *        If given, the format of the asset will be determined using the
+	 *        format the was registered that had this extension as one of it's
+	 *        possible inputs. If the lookup returns nothing the normal format
+	 *        determination will be used. This argument is ignored if requestType
+	 *        is provided.
+	 * @return The requested asset.
+	 * @see #info(String, String, Class, String, AssetInfo)
+	 * @see #future(AssetInfo)
+	 */
+	public static <A> FutureAsset<A> loadFuture( String request, String requestExtension )
+	{
+		return future( info( request, requestExtension, null, null, null ) );
+	}
+
+	/**
+	 * Returns a FutureAsset based on the request and user specified AssetInfo. This is
+	 * equivalent to:
+	 * 
+	 * <pre>
+	 * future( info( request, null, null, null, requestInfo ) )
+	 * </pre>
+	 * 
+	 * @param <A>
+	 *        The type to automatically cast to.
+	 * @param request
+	 *        The request used to determine formats, sources, and subsequently
+	 *        the full path of the asset.
+	 * @param requestInfo
+	 *        If given, this AssetInfo is set and used to load the asset.
+	 *        Otherwise The AssetInfo is determined by requestType if given, or
+	 *        the default AssetInfo for the determined AssetFormat.
+	 * @return The requested asset.
+	 * @see #info(String, String, Class, String, AssetInfo)
+	 * @see #future(AssetInfo)
+	 */
+	public static <A> FutureAsset<A> loadFuture( String request, AssetInfo requestInfo )
+	{
+		return future( info( request, null, null, null, requestInfo ) );
+	}
+
+	/**
+	 * Returns a FutureAsset based on the request, extension, and user specified
+	 * AssetInfo. This is equivalent to:
+	 * 
+	 * <pre>
+	 * future( info( request, requestExtension, null, null, requestInfo ) )
+	 * </pre>
+	 * 
+	 * @param <A>
+	 *        The type to automatically cast to.
+	 * @param request
+	 *        The request used to determine formats, sources, and subsequently
+	 *        the full path of the asset.
+	 * @param requestExtension
+	 *        If given, the format of the asset will be determined using the
+	 *        format the was registered that had this extension as one of it's
+	 *        possible inputs. If the lookup returns nothing the normal format
+	 *        determination will be used. This argument is ignored if requestType
+	 *        is provided.
+	 * @param requestInfo
+	 *        If given, this AssetInfo is set and used to load the asset.
+	 *        Otherwise The AssetInfo is determined by requestType if given, or
+	 *        the default AssetInfo for the determined AssetFormat.
+	 * @return The requested asset.
+	 * @see #info(String, String, Class, String, AssetInfo)
+	 * @see #future(AssetInfo)
+	 */
+	public static <A> FutureAsset<A> loadFuture( String request, String requestExtension, AssetInfo requestInfo )
+	{
+		return future( info( request, requestExtension, null, null, requestInfo ) );
+	}
+
+	/**
+	 * Returns a FutureAsset from a specified source based solely on the request. This
+	 * is equivalent to:
+	 * 
+	 * <pre>
+	 * future( info( request, null, null, sourceName, null ) )
+	 * </pre>
+	 * 
+	 * @param <A>
+	 *        The type to automatically cast to.
+	 * @param request
+	 *        The request used to determine formats, sources, and subsequently
+	 *        the full path of the asset.
+	 * @param sourceName
+	 *        If given, the source of the asset will be determined using this
+	 *        name to lookup an AssetSource. If the lookup returns nothing the
+	 *        normal source determination will be used.
+	 * @return The requested asset.
+	 * @see #info(String, String, Class, String, AssetInfo)
+	 * @see #future(AssetInfo)
+	 */
+	public static <A> FutureAsset<A> loadFutureFrom( String request, String sourceName )
+	{
+		return future( info( request, null, null, sourceName, null ) );
+	}
+
+	/**
+	 * Returns a FutureAsset from a specified source based on the request and an
+	 * expected return type. This is equivalent to:
+	 * 
+	 * <pre>
+	 * future( info( request, null, requestType, sourceName, null ) )
+	 * </pre>
+	 * 
+	 * @param <A>
+	 *        The type to automatically cast to.
+	 * @param request
+	 *        The request used to determine formats, sources, and subsequently
+	 *        the full path of the asset.
+	 * @param sourceName
+	 *        If given, the source of the asset will be determined using this
+	 *        name to lookup an AssetSource. If the lookup returns nothing the
+	 *        normal source determination will be used.
+	 * @param requestType
+	 *        If given, the format of the asset will be determined using the
+	 *        format that was registered that had this type as one of it's
+	 *        possible outputs. If the lookup returns nothing the normal format
+	 *        determination will be used.
+	 * @return The requested asset.
+	 * @see #info(String, String, Class, String, AssetInfo)
+	 * @see #future(AssetInfo)
+	 */
+	public static <A> FutureAsset<A> loadFutureFrom( String request, String sourceName, Class<A> requestType )
+	{
+		return future( info( request, null, requestType, sourceName, null ) );
+	}
+
+	/**
+	 * Returns a FutureAsset from a specified source based on the request and extension.
+	 * This is equivalent to:
+	 * 
+	 * <pre>
+	 * future( info( request, requestExtension, null, sourceName, null ) )
+	 * </pre>
+	 * 
+	 * @param <A>
+	 *        The type to automatically cast to.
+	 * @param request
+	 *        The request used to determine formats, sources, and subsequently
+	 *        the full path of the asset.
+	 * @param sourceName
+	 *        If given, the source of the asset will be determined using this
+	 *        name to lookup an AssetSource. If the lookup returns nothing the
+	 *        normal source determination will be used.
+	 * @param requestExtension
+	 *        If given, the format of the asset will be determined using the
+	 *        format the was registered that had this extension as one of it's
+	 *        possible inputs. If the lookup returns nothing the normal format
+	 *        determination will be used. This argument is ignored if requestType
+	 *        is provided.
+	 * @return The requested asset.
+	 * @see #info(String, String, Class, String, AssetInfo)
+	 * @see #future(AssetInfo)
+	 */
+	public static <A> FutureAsset<A> loadFutureFrom( String request, String sourceName, String requestExtension )
+	{
+		return future( info( request, requestExtension, null, sourceName, null ) );
+	}
+
+	/**
+	 * Returns a FutureAsset from a specified source based on the request and user
+	 * specified AssetInfo. This is equivalent to:
+	 * 
+	 * <pre>
+	 * future( info( request, null, null, sourceName, requestInfo ) )
+	 * </pre>
+	 * 
+	 * @param <A>
+	 *        The type to automatically cast to.
+	 * @param request
+	 *        The request used to determine formats, sources, and subsequently
+	 *        the full path of the asset.
+	 * @param sourceName
+	 *        If given, the source of the asset will be determined using this
+	 *        name to lookup an AssetSource. If the lookup returns nothing the
+	 *        normal source determination will be used.
+	 * @param requestInfo
+	 *        If given, this AssetInfo is set and used to load the asset.
+	 *        Otherwise The AssetInfo is determined by requestType if given, or
+	 *        the default AssetInfo for the determined AssetFormat.
+	 * @return The requested asset.
+	 * @see #info(String, String, Class, String, AssetInfo)
+	 * @see #future(AssetInfo)
+	 */
+	public static <A> FutureAsset<A> loadFutureFrom( String request, String sourceName, AssetInfo requestInfo )
+	{
+		return future( info( request, null, null, sourceName, requestInfo ) );
+	}
+
+	/**
+	 * Returns a FutureAsset from a specified source based on the request, extension,
+	 * and user specified AssetInfo. This is equivalent to:
+	 * 
+	 * <pre>
+	 * future( info( request, requestExtension, null, sourceName, requestInfo ) )
+	 * </pre>
+	 * 
+	 * @param <A>
+	 *        The type to automatically cast to.
+	 * @param request
+	 *        The request used to determine formats, sources, and subsequently
+	 *        the full path of the asset.
+	 * @param sourceName
+	 *        If given, the source of the asset will be determined using this
+	 *        name to lookup an AssetSource. If the lookup returns nothing the
+	 *        normal source determination will be used.
+	 * @param requestExtension
+	 *        If given, the format of the asset will be determined using the
+	 *        format the was registered that had this extension as one of it's
+	 *        possible inputs. If the lookup returns nothing the normal format
+	 *        determination will be used. This argument is ignored if requestType
+	 *        is provided.
+	 * @param requestInfo
+	 *        If given, this AssetInfo is set and used to load the asset.
+	 *        Otherwise The AssetInfo is determined by requestType if given, or
+	 *        the default AssetInfo for the determined AssetFormat.
+	 * @return The requested asset.
+	 * @see #info(String, String, Class, String, AssetInfo)
+	 * @see #future(AssetInfo)
+	 */
+	public static <A> FutureAsset<A> loadFutureFrom( String request, String sourceName, String requestExtension, AssetInfo requestInfo )
+	{
+		return future( info( request, requestExtension, null, sourceName, requestInfo ) );
+	}
+	
 	/**
 	 * Gets an asset based on the provided AssetInfo. If an asset with the same
 	 * path, type, and info is cached it will be returned, otherwise a new asset
@@ -412,13 +721,13 @@ public class Assets
 				assets.put( info.getPath(), info );
 			}
 
-			cacheMisses++;
+			cacheMisses.incrementAndGet();
 		}
 		else
 		{
 			asset = (A)existingInfo.get();
 
-			cacheHits++;
+			cacheHits.incrementAndGet();
 		}
 
 		return asset;
@@ -526,6 +835,30 @@ public class Assets
 		return info;
 	}
 
+	/**
+	 * Returns a FutureAsset depending on the requested type in assetInfo. If 
+	 * the requested type does not map to a specific FutureAsset the default
+	 * implementation is used. Directly before the FutureAsset is returned it
+	 * is submitted to the {@link #getFutureAssetService()} to be loaded. By
+	 * default the future asset service is a single thread and that can be 
+	 * configured with {@link #setFutureAssetService(ExecutorService)}. If the
+	 * future asset service is single threaded the assets will be loaded in the
+	 * order in which they are submitted.
+	 * 
+	 * @param assetInfo
+	 * 		The information about the asset to load in the future.
+	 * @return A newly instantiated FutureAsset.
+	 */
+	public static <A> FutureAsset<A> future( AssetInfo assetInfo )
+	{
+		FutureAssetFactory<A> factory = (FutureAssetFactory<A>)getFutureAssetFactory( assetInfo.getType() );
+		FutureAsset<A> future = factory.createFutureAsset( assetInfo );
+
+		futureAssetService.submit( (Runnable)future );
+		
+		return future;
+	}
+	
 	/**
 	 * Unloads the asset found with the given request if one has been cached. If
 	 * the source is successfully determined and a cached asset exists it it
@@ -796,6 +1129,91 @@ public class Assets
 	}
 
 	/**
+	 * Sets the default FutureAssetFactory to be used. By default this is 
+	 * {@link BaseFutureAsset#Factory()}. The default factory is used when a 
+	 * factory cannot be determined for the requested asset type.
+	 * 
+	 * @param futureAssetFactory
+	 *        The default factory to use for FutureAssets.
+	 */
+	public static void setDefaultFutureAssetFactory( FutureAssetFactory<?> futureAssetFactory )
+	{
+		defaultFutureAssetFactory = futureAssetFactory;
+	}
+	
+	/**
+	 * Returns the default FutureAssetFactory to be used when a 
+	 * FutureAssetFactory cannot be determined based on the request asset type.
+	 * 
+	 * @return The reference to the default FutureAssetFactory.
+	 */
+	public static FutureAssetFactory<?> getDefaultFutureAssetFactory()
+	{
+		return defaultFutureAssetFactory;
+	}
+	
+	/**
+	 * Adds the given FutureAssetFactory to be used for the supplied request 
+	 * types. When a FutureAsset request comes in it uses the expected asset 
+	 * type (if given through {@link #loadFuture(String, Class)} or 
+	 * {@link #loadFutureFrom(String, String, Class)}) to determine the 
+	 * appropriate factory to use to create FutureAssets.
+	 * 
+	 * @param futureAssetFactory
+	 * 		The FutureAssetFactory to add.
+	 * @param requestTypeArray
+	 * 		The set of request types this factory should handle.
+	 */
+	public static void addFutureAssetFactory( FutureAssetFactory<?> futureAssetFactory, Class<?> ... requestTypeArray )
+	{
+		for ( Class<?> requestType : requestTypeArray )
+		{
+			futuresByType.put( requestType, futureAssetFactory );
+		}
+	}
+	
+	/**
+	 * Determines the FutureAssetFactory for the given type. If the request 
+	 * type is null or does not have a specific FutureAssetFactory for it, the
+	 * default FutureAssetFactory is used.
+	 * 
+	 * @param requestType
+	 * 		The request (asset) type.
+	 * @return The FutureAssetFactory to use to create FutureAssets.
+	 */
+	public static FutureAssetFactory<?> getFutureAssetFactory( Class<?> requestType )
+	{
+		FutureAssetFactory<?> factory = futuresByType.get( requestType );
+		
+		return ( factory == null ? defaultFutureAssetFactory : factory );
+	}
+	
+	/**
+	 * Sets the future asset service by shutting down the previous and using 
+	 * the given service. This should only be done at startup, this method 
+	 * purposefully does not care about being thread safe.
+	 * 
+	 * @param service
+	 *        The new ExecutorService to use as the future asset service.
+	 */
+	public static void setFutureAssetService( ExecutorService service )
+	{
+		ExecutorService previousService = futureAssetService;
+		futureAssetService = service;
+		previousService.shutdown();
+	}
+	
+	/**
+	 * Returns the current ExecutorService that is used to submit AssetFutures.
+	 * 
+	 * @return The reference to the future asset service.
+	 */
+	public static ExecutorService getFutureAssetService()
+	{
+		return futureAssetService;
+	}
+	
+	/**
 	 * Enables or Disables asset caching. By default assets will be cached.
 	 * 
 	 * @param cache
@@ -825,7 +1243,7 @@ public class Assets
 	 */
 	public static int getCacheHits()
 	{
-		return cacheHits;
+		return cacheHits.get();
 	}
 
 	/**
@@ -837,7 +1255,7 @@ public class Assets
 	 */
 	public static int getCacheMisses()
 	{
-		return cacheMisses;
+		return cacheMisses.get();
 	}
 	
 	/**
