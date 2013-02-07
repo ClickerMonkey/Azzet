@@ -41,6 +41,8 @@ public class JsonBoolean implements JsonValue
 	}
 
 	/**
+	 * Returns the current value.
+	 * 
 	 * @return The current value.
 	 */
 	public boolean get()

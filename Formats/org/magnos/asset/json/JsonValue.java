@@ -34,16 +34,23 @@ public interface JsonValue
 {
 
 	/**
+	 * Returns the internal object.
+	 * 
 	 * @return The internal object.
 	 */
 	public Object getObject();
 
 	/**
+	 * Returns the value type.
+	 * 
 	 * @return The value type.
 	 */
 	public JsonType getType();
 
 	/**
+	 * Returns this value converted to a JSON string using the default output 
+	 * format.
+	 * 
 	 * @return This value converted to a JSON string.
 	 */
 	public String toJson();

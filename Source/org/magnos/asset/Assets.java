@@ -817,6 +817,9 @@ public class Assets
 	}
 
 	/**
+	 * Returns the number of assets returned that were cached and didn't have 
+	 * to be re-loaded.
+	 * 
 	 * @return The number of assets returned that were cached and didn't have to
 	 *         be re-loaded.
 	 */
@@ -826,6 +829,9 @@ public class Assets
 	}
 
 	/**
+	 * Returns the number of assets that had to be loaded and did not take
+	 * advantage of caching.
+	 * 
 	 * @return The number of assets that had to be loaded and did not take
 	 *         advantage of caching.
 	 */

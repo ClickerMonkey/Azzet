@@ -35,6 +35,8 @@ public class UnknownAssetFormatException extends RuntimeException
 	}
 
 	/**
+	 * Returns the request for the asset.
+	 * 
 	 * @return The request for the asset.
 	 */
 	public String getRequest()
@@ -43,6 +45,8 @@ public class UnknownAssetFormatException extends RuntimeException
 	}
 
 	/**
+	 * Returns the expected type of the request (if any).
+	 * 
 	 * @return The expected type of the request (if any).
 	 */
 	public Class<?> getRequestType()
@@ -51,6 +55,8 @@ public class UnknownAssetFormatException extends RuntimeException
 	}
 
 	/**
+	 * Returns the custom extension used to determine the format (if any).
+	 * 
 	 * @return The custom extension used to determine the format (if any).
 	 */
 	public String getRequestExtension()

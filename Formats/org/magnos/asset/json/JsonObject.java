@@ -231,6 +231,8 @@ public class JsonObject implements JsonValue
 	}
 
 	/**
+	 * Returns the number of values in this object.
+	 * 
 	 * @return The number of values in this object.
 	 */
 	public int size()

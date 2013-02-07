@@ -190,8 +190,7 @@ public class CsvInfo extends BaseAssetInfo
 	/**
 	 * Returns the delimiter option.
 	 * 
-	 * @return
-	 * 		The delimiter to use for separating cells in a row.
+	 * @return The delimiter to use for separating cells in a row.
 	 */
 	public String getDelimiter() 
 	{
@@ -212,9 +211,8 @@ public class CsvInfo extends BaseAssetInfo
 	/**
 	 * Returns the headed option.
 	 * 
-	 * @return
-	 * 		True if the CSV file has a header. A header is a row of cells that
-	 * 		define what each column contains.
+	 * @return True if the CSV file has a header. A header is a row of cells that
+	 * 		   define what each column contains.
 	 */
 	public boolean isHeaded() 
 	{
@@ -236,9 +234,8 @@ public class CsvInfo extends BaseAssetInfo
 	/**
 	 * Returns the trimming option.
 	 * 
-	 * @return
-	 * 		True if the values in the cells should be trimmed. Trimming removes
-	 * 		all whitespace in a value.
+	 * @return True if the values in the cells should be trimmed. Trimming removes
+	 * 		   all whitespace in a value.
 	 */
 	public boolean isTrimming() 
 	{
@@ -260,9 +257,8 @@ public class CsvInfo extends BaseAssetInfo
 	/**
 	 * Returns the ignore empty lines option.
 	 * 
-	 * @return
-	 * 		True if empty lines are to be ignored. If false empty lines will be
-	 * 		added as empty rows to the resulting table.
+	 * @return True if empty lines are to be ignored. If false empty lines will be
+	 * 		   added as empty rows to the resulting table.
 	 */
 	public boolean isIgnoreEmpty() 
 	{
@@ -284,10 +280,9 @@ public class CsvInfo extends BaseAssetInfo
 	/**
 	 * Returns the strict option.
 	 * 
-	 * @return
-	 * 		True if parsing should validate the number of columns in a row. 
-	 * 		When strict a valid CSV file has the same number of columns on 
-	 * 		every non-empty row.
+	 * @return True if parsing should validate the number of columns in a row. 
+	 * 		   When strict a valid CSV file has the same number of columns on 
+	 * 		   every non-empty row.
 	 */
 	public boolean isStrict() 
 	{

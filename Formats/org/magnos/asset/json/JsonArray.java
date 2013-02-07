@@ -238,6 +238,8 @@ public class JsonArray implements JsonValue
 	}
 
 	/**
+	 * Returns the reference to the internal array of JsonValues.
+	 * 
 	 * @return The reference to the internal array of JsonValues.
 	 */
 	public JsonValue[] values()
@@ -246,6 +248,8 @@ public class JsonArray implements JsonValue
 	}
 
 	/**
+	 * Returns yhe number of JsonValues in this array.
+	 * 
 	 * @return The number of JsonValues in this array.
 	 */
 	public int length()

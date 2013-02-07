@@ -116,9 +116,9 @@ public class CharacterSet
 	 * Returns whether this set has the given character.
 	 * 
 	 * @param c
-	 * 	The character to test for existence in this set.
+	 * 		The character to test for existence in this set.
 	 * @return
-	 * 	True if the character is in this set, otherwise false.
+	 * 		True if the character is in this set, otherwise false.
 	 */
 	public boolean has( char c )
 	{
@@ -129,9 +129,9 @@ public class CharacterSet
 	 * Returns whether this set has the given character.
 	 * 
 	 * @param c
-	 * 	The character to test for existence in this set.
+	 * 		The character to test for existence in this set.
 	 * @return
-	 * 	True if the character is in this set, otherwise false.
+	 * 		True if the character is in this set, otherwise false.
 	 */
 	public boolean has( int c )
 	{

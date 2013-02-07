@@ -46,6 +46,8 @@ public class JsonNumber implements JsonValue
 	}
 	
 	/**
+	 * Returns the current value.
+	 * 
 	 * @return The current value.
 	 */
 	public Number get()

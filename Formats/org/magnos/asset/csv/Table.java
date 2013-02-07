@@ -67,8 +67,7 @@ public class Table extends ArrayList<Row>
 	 * the table is determined by taking the number of columns in the first row
 	 * of the table.
 	 *  
-	 * @return
-	 * 		The number of columns in this table.
+	 * @return The number of columns in this table.
 	 */
 	public int getColumns() 
 	{
@@ -92,8 +91,7 @@ public class Table extends ArrayList<Row>
 	 * Returns the header of this table. The header is just another row which
 	 * defines the names of the columns for all of the rows to follow.
 	 * 
-	 * @return
-	 * 		The reference to this tables header.
+	 * @return The reference to this tables header.
 	 */
 	public Row getHeader() 
 	{
@@ -115,8 +113,7 @@ public class Table extends ArrayList<Row>
 	/**
 	 * Returns whether this table has a header.
 	 * 
-	 * @return
-	 * 		True if this tables header has been defined, otherwise false.
+	 * @return True if this tables header has been defined, otherwise false.
 	 */
 	public boolean hasHeader()
 	{
@@ -130,8 +127,7 @@ public class Table extends ArrayList<Row>
 	 * 		The index of the row.
 	 * @param column
 	 * 		The index of the cell.
-	 * @return
-	 * 		The reference to the cell at the given row and column.
+	 * @return The reference to the cell at the given row and column.
 	 */
 	public Cell get(int row, int column) 
 	{
@@ -144,8 +140,7 @@ public class Table extends ArrayList<Row>
 	 * 
 	 * @param delimiter
 	 * 		The delimiter to use to separate columns on a row.
-	 * @return
-	 * 		The string representation of this Table.
+	 * @return The string representation of this Table.
 	 */
 	public String toDelimitedString(String delimiter)
 	{
@@ -176,8 +171,7 @@ public class Table extends ArrayList<Row>
 	 * @param outlined
 	 * 		True if the grid should have an outline of characters around it,
 	 * 		otherwise false.
-	 * @return
-	 * 		The string representation of this Table.
+	 * @return The string representation of this Table.
 	 */
 	public String toFormattedString(boolean padding, boolean outlined)
 	{
@@ -217,9 +211,8 @@ public class Table extends ArrayList<Row>
 	 * Calculates the max width of each column by taking the values in the
 	 * header (if given) and all of the rows.
 	 * 
-	 * @return
-	 * 		An array of lengths where the i'th value is the length of the
-	 * 		longest value in column i.
+	 * @return An array of lengths where the i'th value is the length of the
+	 * 		   longest value in column i.
 	 */
 	private int[] calculateMaxWidth()
 	{
@@ -257,8 +250,7 @@ public class Table extends ArrayList<Row>
 	 * 
 	 * @param max
 	 * 		The array of max column widths.
-	 * @return
-	 * 		An array of format strings for each column.
+	 * @return An array of format strings for each column.
 	 */
 	private String[] calculateFormats(int[] max)
 	{
@@ -385,8 +377,7 @@ public class Table extends ArrayList<Row>
 	 * Returns the string representation of this Table as a formatted string 
 	 * with no padding and no outline.
 	 * 
-	 * @return
-	 * 		The String representation of this Table.
+	 * @return The String representation of this Table.
 	 */
 	public String toString()
 	{

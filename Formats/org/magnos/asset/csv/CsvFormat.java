@@ -133,8 +133,7 @@ public class CsvFormat extends BaseAssetFormat
 	 * @param trim
 	 * 		True if the values should be trimmed before creating the cells or
 	 * 		false if the values should remain untouched.
-	 * @return
-	 * 		An array of cells.
+	 * @return An array of cells.
 	 */
 	private Cell[] toCells(String[] values, boolean trim)
 	{
@@ -150,8 +149,7 @@ public class CsvFormat extends BaseAssetFormat
 	 * 
 	 * @param columns
 	 * 		The number of cells to return.
-	 * @return
-	 * 		The array of cells.
+	 * @return The array of cells.
 	 */
 	private Cell[] emptyCells(int columns) 
 	{

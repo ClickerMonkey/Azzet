@@ -59,6 +59,8 @@ public class JsonString implements JsonValue
 	}
 
 	/**
+	 * Returns the current value.
+	 * 
 	 * @return The current value.
 	 */
 	public String get()
