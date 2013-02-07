@@ -50,10 +50,8 @@ BufferedImage mypic = null;
 while (running) {
   // do stuff
   if ( future.getStatus() == FutureAssetStatus.Loaded ) {
-     // get the loaded asset
-     mypic = future.get();
-     // mark the future as loaded
-     future.loaded();
+     future.loaded(); // mark the future as loaded
+     mypic = future.get();  // get the loaded asset
   }
   // do other stuff
 }
@@ -69,9 +67,10 @@ bundle.add( Assets.loadFuture("sound.wav", Clip.class) );
 BufferedImage image = null;
 Clip sound = null;
 
+// game loop
 while (running) {
-    // do stuff
-   
+   // do stuff
+   // this occurs during the loading screen....
    if (bundle.isComplete()) {
        bundle.loaded(); // notify all FutureAsset implementations the asset has been accepted.
        image = bundle.getAsset("image.gif");
@@ -80,7 +79,6 @@ while (running) {
    } else {
        display bundle.percentComplete();     
    }
-   
    // do other stuff
 }
 ```
