@@ -41,6 +41,50 @@ Properties props = Assets.loadFrom("app.properties", "tcp"); // loads from TcpSo
 - SSL
 - UDP Multicast 
 
+You can also load assets in the background:
+
+```java
+FutureAsset<BufferedImage> future = Assets.loadFuture("mypic.png");
+BufferedImage mypic = null;
+
+while (running) {
+  // do stuff
+  if ( future.getStatus() == FutureAssetStatus.Loaded ) {
+     // get the loaded asset
+     mypic = future.get();
+     // mark the future as loaded
+     future.loaded();
+  }
+  // do other stuff
+}
+```
+
+This type of deferred/lazy loading is especially useful for applications like games with loading screens. You can bundle all of the FutureAssets up to easily manage several assets loading in the background:
+
+```java
+FutureAssetBundle bundle = new FutureAssetBundle();
+bundle.add( Assets.loadFuture("image.gif", BufferedImage.class) );
+bundle.add( Assets.loadFuture("sound.wav", Clip.class) );
+
+BufferedImage image = null;
+Clip sound = null;
+
+while (running) {
+    // do stuff
+   
+   if (bundle.isComplete()) {
+       bundle.loaded(); // notify all FutureAsset implementations the asset has been accepted.
+       image = bundle.getAsset("image.gif");
+       sound = bundle.getAsset("sound.wav");
+       // move from loading to play screen
+   } else {
+       display bundle.percentComplete();     
+   }
+   
+   // do other stuff
+}
+```
+
 <b>Links</b>:
 - [Docmentation](http://clickermonkey.github.com/azzet/) 
 - [Builds](build)
