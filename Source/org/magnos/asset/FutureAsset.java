@@ -33,10 +33,10 @@ import org.magnos.asset.ex.AssetException;
  * while (running) {
  *    // do stuff
  *    if ( future.getStatus() == FutureAssetStatus.Loaded ) {
- *       // get the loaded asset
- *       mypic = future.get();
  *       // mark the future as loaded
  *       future.loaded();
+ *       // get the loaded asset
+ *       mypic = future.get();
  *    }
  *    // do other stuff
  * }
