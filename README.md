@@ -1,5 +1,6 @@
 <h1>azzet</h1>
-<h6>(by Philip Diffenderfer)</h6>
+
+![Stable](http://i4.photobucket.com/albums/y123/Freaklotr4/stage_stable.png)
 
 Azzet is a simple Java library for loading assets from various sources
 
