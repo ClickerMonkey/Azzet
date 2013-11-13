@@ -1,4 +1,4 @@
-<h1>azzet</h1>
+<h1>Azzet</h1>
 
 ![Stable](http://i4.photobucket.com/albums/y123/Freaklotr4/stage_stable.png)
 
