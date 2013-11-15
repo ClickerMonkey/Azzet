@@ -85,7 +85,7 @@ while (running) {
 ```
 
 <b>Links</b>:
-- [Documentation](http://gh.magnos.org/?r=http://clickermonkey.github.com/azzet/) 
+- [Documentation](http://gh.magnos.org/?r=http://clickermonkey.github.com/Azzet/) 
 - [Builds](build)
 - [Examples] (Test/org/magnos/asset)
 
